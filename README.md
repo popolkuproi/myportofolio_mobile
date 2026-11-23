@@ -86,3 +86,44 @@ Strategi penggunaan:
     - Meminta bantuan secara bertahap untuk perubahan dan dokumentasi tertentu.
     - Memberikan identitas profil yang benar untuk menggantikan data contoh.
     - Memeriksa kembali saran AI terhadap kode proyek dan materi kuliah sebelum mengumpulkan.
+
+## Tugas 8
+
+1. `Navigator.push()` menambahkan halaman baru ke atas tumpukan navigasi sehingga pengguna dapat kembali dengan tombol Back. `Navigator.pushReplacement()` mengganti halaman saat ini, sedangkan `Navigator.pop()` menutup halaman teratas dan kembali ke halaman sebelumnya. Kartu **Tambah Proyek** dan **Tambah Edukasi** memakai `Navigator.push()` untuk membuka formulir masing-masing. Opsi **Home** pada drawer memakai `Navigator.pushReplacement()` agar formulir diganti halaman utama.
+
+2. `Scaffold` menyediakan kerangka halaman, termasuk `AppBar`, body, dan drawer. `AppBar` memberi judul dan navigasi yang konsisten. Drawer yang sama dipakai di halaman utama, formulir proyek, dan formulir edukasi; warna AppBar formulir dan header drawer mengikuti `Theme.of(context).colorScheme.primary`, yang berasal dari tema indigo aplikasi.
+
+3. Formulir memakai `SingleChildScrollView` di sekitar `Column`, sehingga isian dapat disusun vertikal dan tetap dapat digulir ketika layar pendek atau keyboard terbuka. `Padding` atau `SizedBox` memberi jarak antarinput agar tidak berhimpitan. Scroll memungkinkan pengguna mencapai tombol **Simpan** atau **Save** saat ruang layar terbatas.
+
+4. `GlobalKey<FormState>` memberi akses ke state `Form`, termasuk pemanggilan `validate()`. Setiap `TextFormField` menjalankan validator; tombol simpan hanya menampilkan `AlertDialog` setelah seluruh validator lolos. Pada formulir edukasi, nama institusi yang kosong atau hanya spasi ditolak. Tahun mulai dan tahun selesai juga diperiksa sebagai angka dalam rentang yang masuk akal, dan tahun selesai tidak boleh mendahului tahun mulai. Keyboard angka saja tidak menjamin isian tahun valid, seperti halnya keyboard URL tidak memastikan tautan memiliki skema `http` atau `https` dan host.
+
+## AI Disclosure
+
+Dalam pengerjaan Tugas 8, saya menggunakan ChatGPT sebagai pendamping untuk membaca rubrik dan memeriksa implementasi formulir serta navigasi yang sudah ada di proyek. Formulir **Tambah Proyek** berasal dari Tutorial 9. Untuk melengkapi tugas, ChatGPT membantu membuat halaman **Tambah Edukasi** yang terpisah, menambahkan aksesnya dari kartu beranda dan drawer, serta melengkapi validasi dan dialog ringkasan. Bantuan juga mencakup validasi format tautan opsional pada formulir proyek, konsistensi warna tema, serta penyusunan jawaban reflektif dan dokumentasi Tugas 8.
+
+Saya memberikan PDF instruksi dan rubrik Tugas 8, `README.md`, serta kode halaman dan widget yang terkait. Saya meminta pemeriksaan checklist terhadap kode yang ada, kemudian perubahan terarah pada bagian yang perlu dilengkapi. Sebelum dikumpulkan, saya perlu memastikan jawaban dan perubahan sesuai dengan rubrik dan implementasi. AI dapat keliru membaca perilaku navigasi atau menganggap validasi input sudah cukup, jadi saya perlu memahami hasilnya dan mencocokkannya dengan materi kuliah.
+
+Referensi Penggunaan AI
+
+AI yang digunakan:
+    - ChatGPT
+
+Bentuk bantuan:
+    - Membaca checklist dan rubrik Tugas 8 lalu membandingkannya dengan implementasi proyek.
+    - Membuat halaman form edukasi baru dengan field institusi, jenjang, jurusan, dan rentang tahun pendidikan.
+    - Menambahkan navigasi ke form edukasi dari kartu beranda dan drawer.
+    - Menambahkan validasi field dan dialog ringkasan pada form edukasi.
+    - Menambahkan validasi URL opsional untuk tautan dengan skema `http` atau `https` dan host.
+    - Menyesuaikan warna AppBar formulir dan header drawer agar memakai warna utama tema aplikasi.
+    - Membantu menyusun empat jawaban reflektif berdasarkan kode aktual.
+    - Membantu memperbarui dokumentasi dan bagian AI Disclosure di README.
+    - Menjalankan `flutter analyze`; hasilnya `No issues found!`.
+    - Menjalankan tes widget untuk validasi, ringkasan, navigasi, dan layout pada layar ponsel 390 × 844.
+
+Strategi penggunaan:
+    - Memberikan instruksi tugas, rubrik, README, dan file kode yang relevan sebagai konteks.
+    - Meminta pemeriksaan checklist terlebih dahulu, lalu perubahan kecil pada bagian yang perlu dilengkapi.
+    - Meminta jawaban reflektif merujuk pada implementasi proyek, bukan hanya penjelasan umum Flutter.
+    - Mencocokkan saran dengan kode dan rubrik; hasil analyzer tidak menggantikan pemeriksaan interaksi aplikasi.
+
+ChatGPT turut menghasilkan perubahan kode dan draf dokumentasi, jadi bantuannya bukan hanya pemeriksaan ejaan atau pencarian informasi. Saya perlu memahami perubahan tersebut dan memastikan hasil akhirnya sesuai dengan materi kuliah. `flutter analyze` dan tes widget pada ukuran ponsel lulus, tetapi tes widget tidak sepenuhnya menggantikan pemeriksaan pada perangkat.

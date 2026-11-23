@@ -29,7 +29,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Add Project Form')),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
       drawer: const LeftDrawer(),
@@ -111,6 +111,7 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.url,
                   decoration: InputDecoration(
                     hintText: "URL Proyek (opsional)",
                     labelText: "Tautan Proyek",
@@ -119,6 +120,18 @@ class _ProjectFormPageState extends State<ProjectFormPage> {
                     ),
                   ),
                   onChanged: (value) => _projectLink = value,
+                  validator: (value) {
+                    final link = value?.trim() ?? '';
+                    if (link.isEmpty) return null;
+
+                    final uri = Uri.tryParse(link);
+                    if (uri == null ||
+                        !{'http', 'https'}.contains(uri.scheme.toLowerCase()) ||
+                        uri.host.isEmpty) {
+                      return 'Masukkan URL yang valid (http/https)!';
+                    }
+                    return null;
+                  },
                 ),
               ),
               Align(
