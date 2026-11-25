@@ -1,6 +1,10 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/education_form.dart';
+import 'package:myportofolio_mobile/screens/project_list_screen.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
+import 'package:provider/provider.dart';
 
 class ItemHomepage {
   final String name;
@@ -21,17 +25,10 @@ class ItemCard extends StatelessWidget {
       color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!"),
-              ),
-            );
-
+        onTap: () async {
           if (item.name == "Tambah Proyek") {
-            Navigator.push(
+            if (!await ensureLoggedIn(context) || !context.mounted) return;
+            await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ProjectFormPage()),
             );
@@ -42,6 +39,23 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const EducationFormPage(),
               ),
             );
+          } else if (item.name == "Lihat Proyek") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProjectListScreen()),
+            );
+          } else if (item.name == "Logout") {
+            if (!context.read<AuthState>().isLoggedIn) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Anda belum login.')),
+              );
+              return;
+            }
+            await context.read<AuthState>().logout();
+            if (!context.mounted) return;
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Logout berhasil.')));
           }
         },
         child: Padding(
